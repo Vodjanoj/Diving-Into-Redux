@@ -1,11 +1,14 @@
+// Component is for class-based component
+// import { Component } from "react";
 // useSelector allows us to automatically select a part of our state managed by the store.
-import { useSelector, useDispatch } from "react-redux"; 
+// connect is a function that helps you connect class-based components to Redux.
+// import { connect } from "react-redux";
+import { useSelector, useDispatch, connect } from "react-redux";
 import classes from "./Counter.module.css";
 
 const Counter = () => {
-
   // now dispatch is a function
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
   // we should pass a function to useSelector, a function which we'll receive the state managed
   // by Redux and then we return the part of the state which you wanna extract.
@@ -16,12 +19,12 @@ const Counter = () => {
   const counter = useSelector((state) => state.counter);
 
   const incrementHandler = () => {
-    dispatch({type: 'increment' });
-  }
+    dispatch({ type: "increment" });
+  };
 
   const decrementHandler = () => {
-    dispatch({type: 'decrement' });
-  }
+    dispatch({ type: "decrement" });
+  };
 
   const toggleCounterHandler = () => {};
 
@@ -39,3 +42,50 @@ const Counter = () => {
 };
 
 export default Counter;
+
+// class Counter extends Component {
+//   incrementHandler() {
+//     this.props.increment();
+//   }
+
+//   decrementHandler() {
+//     this.props.decrement();
+//   }
+
+//   toggleCounterHandler() {
+
+//   }
+
+//   render() {
+//     return (
+//       <main className={classes.counter}>
+//         <h1>Redux Counter</h1>
+//         <div className={classes.value}>{this.props.counter}</div>
+//         <div>
+//           <button onClick={this.incrementHandler.bind(this)}>Increment</button>
+//           <button onClick={this.decrementHandler.bind(this)}>Decrement</button>
+//         </div>
+//         <button onClick={this.toggleCounterHandler}>Toggle Counter</button>
+//       </main>
+//     );
+
+//   }
+// }
+
+// // the same as useSelector above
+// const mapStateToProps = state => {
+//   return {
+//     counter: state.counter
+//   };
+// }
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     increment: () => dispatch({type: 'increment'}),
+//     decrement: () => dispatch({type: 'decrement'}),
+//   }
+// }
+
+// // we call connect and now connect when executed, will actually return a new function as a value, which we then execute again,
+// // and then we pass our component to that returned function as our argument.
+// export default connect(mapStateToProps,mapDispatchToProps)(Counter);
