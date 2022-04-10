@@ -12,4 +12,4 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 // for the store prop.
 // Now our components in this app can tap into that store. They can get data out of the store. They can set up a subscription to that data to be precise,
 // and they also can dispatch actions.
-ront.render(<Provider store={store}><App /></Provider>);
+root.render(<Provider store={store}><App /></Provider>);
