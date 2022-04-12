@@ -8,7 +8,7 @@ const initialState = { counter: 0, showCounter: true };
 const counterSlice = createSlice({
   name: "counter",
   initialState, // modern javascript value if initialState is { counter: 0, showCounter: true }
-  // reducers is again, an object, a map you could say, of all the reducers this slice needs
+  // reducers is again, an object ('actions object'), a map you could say, of all the reducers this slice needs
   reducers: {
     increment(state) {
       // we can mutate state here, we still must not manipulate the existing state, but the good thing is when using Redux toolkit
@@ -21,13 +21,14 @@ const counterSlice = createSlice({
       state.counter--;
     },
     increase(state, action) {
-      state.counter = state.counter + action.amount;
+      state.counter = state.counter + action.payload;
     },
     toggleCounter(state) {
       state.showCounter = !state.showCounter;
     },
   },
 });
+
 
 // const counterReducer = (state = initialState, action) => {
 //   if (action.type === "increment") {
@@ -71,6 +72,15 @@ const store = configureStore({
 
   reducer: counterSlice.reducer,
 });
+
+// actions. match our keys in the reducers area in counterSlice
+// And with that (toggleCounter and others) we don't access the reducer methods to find up there but instead we get methods created automatically by Redux Toolkit
+// which when called will create action objects for us, toggleCounter and other methods are called action creators and they will create action objects for us where these objects already have a type property
+// with a unique identifier per action. Automatically created behind the scenes. So we don't have to worry about action identifiers.
+// We don't have to create those action objects on our own. We can tap into this actions key into this actions object on our createSlice
+// and execute these action creator methods, which with their name match our reducer methods to dispatch actions, which will then ultimately trigger those different reducer methods.
+// const counterActions = counterSlice.actions.toggleCounter
+export const counterActions = counterSlice.actions;
 
 // const counterSubscriber = () => {
 //   const latestState = store.getState();
