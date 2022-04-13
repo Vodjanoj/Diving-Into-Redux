@@ -3,11 +3,11 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 
 const redux = require("redux");
 
-const initialState = { counter: 0, showCounter: true };
+const initialCounterState = { counter: 0, showCounter: true };
 
 const counterSlice = createSlice({
   name: "counter",
-  initialState, // modern javascript value if initialState is { counter: 0, showCounter: true }
+  initialState: initialCounterState, // modern javascript value of initialState is { counter: 0, showCounter: true }
   // reducers is again, an object ('actions object'), a map you could say, of all the reducers this slice needs
   reducers: {
     increment(state) {
@@ -29,6 +29,26 @@ const counterSlice = createSlice({
   },
 });
 
+
+
+const initialAuthState = {
+  isAuthenticated: false,
+};
+
+
+
+const authSlice = createSlice({ 
+  name: "authentication",
+  initialState: initialAuthState,
+  reducers: {
+    login(state) {
+      state.isAuthenticated = true;
+    },
+    logout(state) {
+      state.isAuthenticated = false;
+    },
+  },
+});
 
 // const counterReducer = (state = initialState, action) => {
 //   if (action.type === "increment") {
@@ -64,13 +84,16 @@ const counterSlice = createSlice({
 //   return state;
 // };
 
+
+// when you work with multiple slices, you still only have one Redux store, so you still only call configureStore once.
+// so you still only call configureStore once. This does not change. And this store only has one root reducer here
 const store = configureStore({
   // we can set up any keys of our choice, and the values of those properties would then be different reducer functions.
-  // So we would create a map of reducers you could say, and this map is then set as a value for the main reducer and behind the scenes configureStore
+  // So we would create a map of reducers you could say, and this map is then set as a value for the main reducer
   // and behind the scenes configureStore will emerge all those reducers into one big reducer. So it will merge them for us.
   // reducer: { counter: counterSlice.reducer }
 
-  reducer: counterSlice.reducer,
+  reducer: { counter: counterSlice.reducer, auth: authSlice.reducer }
 });
 
 // actions. match our keys in the reducers area in counterSlice
@@ -81,6 +104,7 @@ const store = configureStore({
 // and execute these action creator methods, which with their name match our reducer methods to dispatch actions, which will then ultimately trigger those different reducer methods.
 // const counterActions = counterSlice.actions.toggleCounter
 export const counterActions = counterSlice.actions;
+export const authActions = authSlice.actions;
 
 // const counterSubscriber = () => {
 //   const latestState = store.getState();

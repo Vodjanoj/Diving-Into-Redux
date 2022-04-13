@@ -17,9 +17,11 @@ const Counter = () => {
   // So your component will be updated and will receive the latest counter automatically whenever that data changes in the Redux store
   // If you ever would unmount this component, if it would be removed from the DOM for whatever reason, React Redux would also automatically clear
   //  React Redux would also automatically clear. So it manages that subscription for you behind the scenes.
-  const counter = useSelector((state) => state.counter);
 
-  const show = useSelector((state) => state.showCounter);
+  // 'counter' we should use identifier set in our store previously
+  const counter = useSelector((state) => state.counter.counter);
+
+  const show = useSelector((state) => state.counter.showCounter);
 
   const incrementHandler = () => {
     dispatch(counterActions.increment()); 
