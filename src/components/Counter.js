@@ -4,7 +4,7 @@
 // connect is a function that helps you connect class-based components to Redux.
 // import { connect } from "react-redux";
 import { useSelector, useDispatch, connect } from "react-redux";
-import { counterActions } from "../store/index";
+import { counterActions } from "../store/counter";
 import classes from "./Counter.module.css";
 
 const Counter = () => {
